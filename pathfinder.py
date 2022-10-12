@@ -15,12 +15,17 @@ maze = [
     ["#", "#", "#", "#", "#", "#", "#", "X", "#"],
 ]
 
+"""
+TODO: generate a maze
+TODO: calculate the weight of the path > return the number of moves
+"""
+
 
 def print_maze(maze, stdscr, path=[]):
-    BLUE = curses.color_pair(1)  # noqa: F841
-    RED = curses.color_pair(2)  # noqa: F841
+    BLUE = curses.color_pair(1)
+    RED = curses.color_pair(2)
 
-    for i, row in enumerate(maze):  # gives me index and value
+    for i, row in enumerate(maze):
         for j, value in enumerate(row):
             if (i, j) in path:
                 stdscr.addstr(i, j * 2, "X", RED)
@@ -37,15 +42,6 @@ def find_start(maze, start):
 
 
 def find_path(maze, stdscr):
-    """Breadth first search for a path through the maze
-
-    Args:
-        maze (list): the maze to search
-        stdscr (terminal): the terminal screen
-
-    Returns:
-        _type_: _description_
-    """
     start = "O"
     end = "X"
     start_pos = find_start(maze, start)
@@ -79,7 +75,6 @@ def find_path(maze, stdscr):
             new_path = path + [neighbor]
             q.put((neighbor, new_path))
             visited.add(neighbor)
-    return None
 
 
 def find_neighbors(maze, row, col):
