@@ -40,6 +40,37 @@ def find_path(maze, stdscr):
     start_pos = find_start(maze, start)  # noqa: F841
 
     q = queue.Queue  # noqa: F841
+    q.put((start_pos, [start_pos]))  # place start position in the queue
+
+    visited = set()  # noqa: F841
+
+    while not q.empty():
+        current_pos, path = q.get()
+        row, col = current_pos
+
+        if maze[row][col] == end:
+            return path  # we have found the end
+
+        neighbors = find_neighbors(maze, row, col)
+        for neighbor in neighbors:
+            if neighbor in visited:
+                continue
+    return None
+
+
+def find_neighbors(maze, row, col):
+    neighbors = []
+
+    if row > 0:  # up
+        neighbors.append((row - 1, col))
+    if row + 1 < len(maze):  # down
+        neighbors.append((row + 1, col))
+    if col > 0:  # left
+        neighbors.append((row, col - 1))
+    if col + 1 < len(maze[0]):  # right
+        neighbors.append((row, col + 1))
+
+    return neighbors
 
 
 def main(stdscr):  # standard output screen.
